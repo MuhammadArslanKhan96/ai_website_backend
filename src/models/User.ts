@@ -68,7 +68,7 @@ export const signupUser = async (user: {
     const { name, last_name, email, phone_number, password } = user;
     const hashedPassword = await bcrypt.hash(password, 10);
     const result = await query(
-      "INSERT INTO Users(name, last_name, email, phone_number, password) VALUES($1, $2, $3, $4, $5) RETURNING *",
+      "INSERT INTO users(name, last_name, email, phone_number, password) VALUES($1, $2, $3, $4, $5) RETURNING *",
       [name, last_name, email, phone_number, hashedPassword]
     );
     return result.rows[0];

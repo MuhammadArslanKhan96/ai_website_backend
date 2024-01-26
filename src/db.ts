@@ -3,8 +3,8 @@ import { Pool } from "pg";
 const pool = new Pool({
   user: "postgres",
   host: "localhost",
-  database: "postgres",
-  password: "Cubicus123",
+  database: "aiwebsite",
+  password: "db123",
   port: 5432,
 });
 
@@ -25,12 +25,12 @@ const createTable = async (tableName: string, columns: string) => {
 };
 
 createTable(
-  "Company",
+  "company",
   "id SERIAL PRIMARY KEY, name TEXT NOT NULL, profile_id TEXT NOT NULL, registration_date DATE NOT NULL, license_valid_until DATE NOT NULL"
 );
 createTable(
-  "Users",
-  "id SERIAL PRIMARY KEY, name TEXT NOT NULL, last_name TEXT NOT NULL, email TEXT NOT NULL, phone_number TEXT NOT NULL, password TEXT NOT NULL"
+  "users",
+  "id SERIAL PRIMARY KEY, name TEXT NOT NULL, last_name TEXT NOT NULL, email TEXT NOT NULL, phone_number TEXT NOT NULL, password TEXT NOT NULL, type TEXT"
 );
 
 export const query = (text: string, params: any[]) => pool.query(text, params);
