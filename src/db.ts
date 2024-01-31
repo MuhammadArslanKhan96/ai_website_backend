@@ -1,11 +1,17 @@
 import { Pool } from "pg";
+import "dotenv/config";
+
+const { PGHOST, PGDATABASE, PGUSER, PGPASSWORD, ENDPOINT_ID } = process.env;
 
 const pool = new Pool({
-  user: "postgres",
-  host: "localhost",
-  database: "aiwebsite",
-  password: "db123",
+  host: PGHOST,
+  database: PGDATABASE,
+  user: PGUSER,
+  password: PGPASSWORD,
   port: 5432,
+  ssl: {
+    rejectUnauthorized: false,
+  },
 });
 
 const createTable = async (tableName: string, columns: string) => {

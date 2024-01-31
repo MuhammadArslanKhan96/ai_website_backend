@@ -8,6 +8,10 @@ const port = 5000;
 const swaggerDoc = require("swagger-ui-express");
 const swaggerDocumentation = require("./helper/Documentation.ts");
 
+app.get("/", (req: express.Request, res: express.Response) => {
+  res.send("Hello World!");
+});
+
 app.use(cors());
 app.use(express.json());
 app.use("/documentations", swaggerDoc.serve);
