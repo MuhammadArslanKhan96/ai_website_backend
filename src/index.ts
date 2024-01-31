@@ -4,7 +4,7 @@ import companyRoutes from "./routes/companyRoutes";
 import userRoutes from "./routes/userRoutes";
 
 const app = express();
-const port = 3030;
+const port = 5000;
 const swaggerDoc = require("swagger-ui-express");
 const swaggerDocumentation = require("./helper/Documentation.ts");
 
