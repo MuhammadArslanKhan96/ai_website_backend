@@ -13,6 +13,7 @@ app.get("/", (req: express.Request, res: express.Response) => {
 });
 
 app.use(cors());
+app.use(express.static('public'));
 app.use(express.json());
 app.use("/documentations", swaggerDoc.serve);
 app.use("/documentations", swaggerDoc.setup(swaggerDocumentation));
