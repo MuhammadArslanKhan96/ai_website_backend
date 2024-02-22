@@ -2,6 +2,8 @@ import express from "express";
 import cors from "cors";
 import companyRoutes from "./routes/companyRoutes";
 import userRoutes from "./routes/userRoutes";
+import messageRoutes from "./routes/messageRoutes";
+import instructionRoutes from "./routes/instructionRoutes";
 
 const app = express();
 const port = 3000;
@@ -20,6 +22,8 @@ app.use("/documentations", swaggerDoc.setup(swaggerDocumentation));
 
 app.use("/companies", companyRoutes);
 app.use("/users", userRoutes);
+app.use("/messages", messageRoutes);
+app.use("/instructions", instructionRoutes);
 
 app.listen(port, () => {
   console.log(`App listening at ${port}`);

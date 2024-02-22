@@ -38,5 +38,13 @@ createTable(
   "users",
   "id SERIAL PRIMARY KEY, name TEXT NOT NULL, last_name TEXT NOT NULL, email TEXT NOT NULL, phone_number TEXT NOT NULL, password TEXT NOT NULL, type TEXT"
 );
+createTable(
+  "messages",
+  "id SERIAL PRIMARY KEY, role TEXT NOT NULL, content TEXT NOT NULL, created_at TEXT NOT NULL, user_id INT REFERENCES users(id)"
+);
+createTable(
+  "instructions",
+  "id SERIAL PRIMARY KEY, name TEXT NOT NULL, instructions TEXT NOT NULL, created_at TEXT NOT NULL, user_id INT REFERENCES users(id)"
+);
 
 export const query = (text: string, params: any[]) => pool.query(text, params);
