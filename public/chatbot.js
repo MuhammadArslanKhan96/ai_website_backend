@@ -1,5 +1,8 @@
 // chatbot-widget.js
-(function (w, d) {
+const url = new URL(document.currentScript.getAttribute('src'));
+const { user_id: uid, company } = Object.fromEntries(url.searchParams.entries());
+
+(function (w, d, uid, company) {
   w.ChatbotWidget = function () {
     var chatInput = d.createElement("input");
     var chatOutput = d.createElement("div");
@@ -58,6 +61,19 @@
 
     var messages = [];
 
+    const instructions = [];
+    //http://localhost:4000/instructions
+    fetch(`https://51.20.105.60.nip.io:3001/${uid}/${company}`).then(response => response.json())
+      .then(data => storeInstructiion(data?.data || []))
+      .catch(error => console.error('Fetch error:', error));
+
+    const storeInstructiion = (data) => {
+      console.log(data)
+      data.map(obj => instructions.push({ role: "system", content: obj.instructions }));
+    }
+
+    console.log(uid, "uid")
+
     chatButton.addEventListener("click", function () {
       var isChatOpen = chatInput.style.display !== "none";
       chatInput.style.display = isChatOpen ? "none" : "block";
@@ -76,20 +92,28 @@
 
         messages.push(
           '<p style="text-align: right; color: blue; border: 1px solid blue; border-radius: 5px; padding: 5px;">' +
-            message +
-            "</p>"
+          message +
+          "</p>"
         );
         chatOutput.innerHTML = messages.join("");
         chatOutput.scrollTop = chatOutput.scrollHeight;
 
         loadingMessage.style.display = "block";
 
+        // http://localhost:8080/chat
+        // https://51.20.105.60.nip.io:8000/chat
         fetch("https://51.20.105.60.nip.io:8000/chat", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ text: message, plan: "ZYRUS-3" }),
+          body: JSON.stringify(
+            {
+              messages: instructions,
+              text: message,
+              plan: "ZYRUS-3"
+            }
+          ),
         })
           .then((response) => response.json())
           .then((data) => {
@@ -97,8 +121,8 @@
 
             messages.push(
               "<p style='color: green; border: 1px solid green; border-radius: 5px; padding: 5px;'>" +
-                data.message +
-                "</p>"
+              data.message +
+              "</p>"
             );
             chatOutput.innerHTML = messages.join("");
             chatOutput.scrollTop = chatOutput.scrollHeight;
@@ -106,4 +130,6 @@
       }
     });
   };
-})(window, document);
+})(window, document, uid, company);
+
+

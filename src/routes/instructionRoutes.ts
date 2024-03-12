@@ -5,7 +5,7 @@ const router = express.Router();
 
 router.get("/read/:id", instructionsController.readInstruction);
 router.delete("/delete/:id", instructionsController.deleteInstruction);
-router.get("/:userid", instructionsController.getAllInstructions);
+router.get("/:userid/:iscompany", instructionsController.getAllInstructions);
 router.post("/create", instructionsController.createInstruction);
 
 export default router;

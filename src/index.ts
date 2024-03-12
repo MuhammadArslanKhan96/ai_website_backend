@@ -6,7 +6,7 @@ import messageRoutes from "./routes/messageRoutes";
 import instructionRoutes from "./routes/instructionRoutes";
 
 const app = express();
-const port = 3000;
+const port = 3000; //3000
 const swaggerDoc = require("swagger-ui-express");
 const swaggerDocumentation = require("./helper/Documentation.ts");
 
